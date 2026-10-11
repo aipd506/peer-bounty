@@ -1,0 +1,43 @@
+name: 'Peer-Bounty Settlement'
+description: 'Zero-backend peer-to-peer Bitcoin bounty badges and autonomous settlement for GitHub issues.'
+author: 'aipd506'
+branding:
+  icon: 'zap'
+  color: 'orange'
+
+inputs:
+  nwc_secret:
+    description: 'Nostr Wallet Connect URI or secret key for autonomous Lightning settlement'
+    required: false
+  github_token:
+    description: 'GitHub token for writing settlement comments and closing badges'
+    required: false
+    default: ${{ github.token }}
+  ledger_path:
+    description: 'Path to the repository bounty ledger file'
+    required: false
+    default: '.peer-bounty/bounties.json'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install Peer-Bounty
+      shell: bash
+      run: pip install peer-bounty
+
+    - name: Settle Merged Pull Request Bounty
+      shell: bash
+      env:
+        PR_TITLE: ${{ github.event.pull_request.title }}
+        PR_BODY: ${{ github.event.pull_request.body }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+        NWC_SECRET: ${{ inputs.nwc_secret }}
+        LEDGER_PATH: ${{ inputs.ledger_path }}
+      run: |
+        peerbounty action-settle

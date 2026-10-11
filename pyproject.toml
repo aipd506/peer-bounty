@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "peer-bounty"
+version = "0.1.0"
+description = "Zero-backend peer-to-peer Bitcoin bounty badges and autonomous settlement for GitHub issues."
+readme = "README.md"
+authors = [{ name = "aipd506", email = "aipd506@users.noreply.github.com" }]
+license = { text = "MIT" }
+keywords = [
+    "bitcoin",
+    "lightning-network",
+    "bounty",
+    "github-action",
+    "open-source",
+    "micropayments",
+    "satoshis",
+    "nwc",
+    "nostr",
+    "developer-tools"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Utilities"
+]
+requires-python = ">=3.8"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "ruff>=0.1.0"
+]
+
+[project.scripts]
+peerbounty = "peer_bounty.cli:main"
+peer-bounty = "peer_bounty.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/aipd506/peer-bounty"
+Repository = "https://github.com/aipd506/peer-bounty"
+Issues = "https://github.com/aipd506/peer-bounty/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
